@@ -1,3 +1,6 @@
+# LƯU Ý: File này được chạy trong môi trường của tệp tdsvip.py (Loader)
+# Khởi tạo lại màu sắc để các hàm chính có thể sử dụng (vì chúng không nằm trong hàm main của loader)
+
 den = "\033[1;90m"
 luc = "\033[1;32m"
 trang = "\033[1;37m"
@@ -12,14 +15,11 @@ thanh_xau= "\033[1;97m-> "
 thanh_dep= "\033[1;97m-> "
 
 # Import cần thiết cho Core
-from pystyle import Colorate, Colors 
+from pystyle import Colorate, Colors # Chỉ cần Colorate và Colors cho phần nhiệm vụ
 import requests
 import os
 from time import sleep
 from datetime import datetime
-import sys
-
-# ĐÃ LOẠI BỎ CÁC IMPORT PHỤ TRỢ ANTI-HOOK (uuid, hashlib, platform, etc.)
 
 class TraoDoiSub_Api (object):
 	def __init__ (self, token):
@@ -72,8 +72,7 @@ class TraoDoiSub_Api (object):
 				xuthem = nhan.json()['data']['xu_them']
 				global total
 				total+=xuthem
-				# bonam() được định nghĩa trong loader, nhưng exec(remote_code, globals()) mang nó vào đây
-				bonam(14) 
+				bonam(14)
 				print(f'{trang}Nhận Thành Công {job} Nhiệm Vụ {red}| {lam}{msg} {red}| {luc}TOTAL {vang}{total} {luc}Xu {red}| {vang}{xu} ')
 				bonam(14)
 				if job == 0:
@@ -104,9 +103,6 @@ def chuyen(link, may):
 
 
 def main():
-	# Lấy biến may và total từ global scope (từ Loader)
-	global may, total
-
 	dem=0
 
 	while True:
@@ -343,6 +339,6 @@ def main():
 												namtool = 1
 												break
 											bonam(14)
-
+# Cuối cùng, hàm main() này sẽ được gọi ở tệp local sau khi tải về.
 if __name__ == '__main__':
     main()
