@@ -1,5 +1,3 @@
-# MÃ MÀU VÀ THƯ VIỆN CẦN DÙNG TRONG PHẦN CORE LOGIC
-
 den = "\033[1;90m"
 luc = "\033[1;32m"
 trang = "\033[1;37m"
