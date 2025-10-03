@@ -1,5 +1,25 @@
-# LƯU Ý: File này được chạy trong môi trường của tệp tdsvip.py (Loader)
-# Toàn bộ biến/hàm/module đã được định nghĩa ở trên (như bonam, total, may, requests...) đều có thể dùng.
+# MÃ MÀU VÀ THƯ VIỆN CẦN DÙNG TRONG PHẦN CORE LOGIC
+
+den = "\033[1;90m"
+luc = "\033[1;32m"
+trang = "\033[1;37m"
+red = "\033[1;31m"
+vang = "\033[1;33m"
+tim = "\033[1;35m"
+lamd = "\033[1;34m"
+lam = "\033[1;36m"
+purple = "\033[35m"
+hong = "\033[1;95m"
+thanh_xau= "\033[1;97m-> "
+thanh_dep= "\033[1;97m-> "
+
+# Import cần thiết cho Core
+from pystyle import Colorate, Colors 
+import requests
+import os
+from time import sleep
+from datetime import datetime
+import sys
 
 class TraoDoiSub_Api (object):
 	def __init__ (self, token):
@@ -23,7 +43,7 @@ class TraoDoiSub_Api (object):
 				return False
 		except:
 			return False
-	#tiktok_like, tiktok_follow
+	
 	def get_job(self, type):
 		try:
 			get = requests.get(f'https://traodoisub.com/api/?fields={type}&access_token={self.token}')
@@ -32,7 +52,6 @@ class TraoDoiSub_Api (object):
 			return False
 	
 	def cache(self, id, type):
-#TIKTOK_LIKE_CACHE, TIKTOK_FOLLOW_CACHE
 		try:
 			cache = requests.get(f'https://traodoisub.com/api/coin/?type={type}&id={id}&access_token={self.token}').json()
 			try:
@@ -53,7 +72,8 @@ class TraoDoiSub_Api (object):
 				xuthem = nhan.json()['data']['xu_them']
 				global total
 				total+=xuthem
-				bonam(14)
+				# bonam() được định nghĩa trong loader, nhưng exec(remote_code, globals()) mang nó vào đây
+				bonam(14) 
 				print(f'{trang}Nhận Thành Công {job} Nhiệm Vụ {red}| {lam}{msg} {red}| {luc}TOTAL {vang}{total} {luc}Xu {red}| {vang}{xu} ')
 				bonam(14)
 				if job == 0:
@@ -84,7 +104,9 @@ def chuyen(link, may):
 
 
 def main():
-	# Hàm main() mới này sẽ được gọi sau khi code từ xa được nạp
+	# Lấy biến may và total từ global scope (từ Loader)
+	global may, total
+
 	dem=0
 
 	while True:
@@ -173,7 +195,7 @@ def main():
 							coun = listlike.json()['countdown']
 							print(f'{red}Đang Get Nhiệm Vụ Like, COUNTDOWN: {str(round(coun, 3))} ', end = '\r'); sleep(2); print('                                                       ', end = '\r')
 						elif listlike.json()['error'] == 'Vui lòng ấn NHẬN TẤT CẢ rồi sau đó tiếp tục làm nhiệm vụ để tránh lỗi!':
-							nhan = tds.nhan_xu('TIKTOK_LIKE_API', 'TIKTOK_LIKE') #TIKTOK_LIKE, TIKTOK_FOLLOW, TIKTOK_COMMENT
+							nhan = tds.nhan_xu('TIKTOK_LIKE_API', 'TIKTOK_LIKE') 
 						else:
 							print(red+listlike.json()['error'] , end ='\r');sleep(2); print('                                                        ', end = '\r')
 					else:
@@ -224,7 +246,7 @@ def main():
 							coun = listfollow.json()['countdown']
 							print(red+f'Đang Get Nhiệm Vụ Follow, COUNTDOWN: {str(round(coun, 3))} ', end = '\r'); sleep(2); print('                                                       ', end = '\r')
 						elif listfollow.json()['error'] == 'Vui lòng ấn NHẬN TẤT CẢ rồi sau đó tiếp tục làm nhiệm vụ để tránh lỗi!':
-							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') #TIKTOK_LIKE, TIKTOK_FOLLOW, TIKTOK_COMMENT
+							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') 
 						else:
 							print(red+listfollow.json()['error'] , end ='\r');sleep(2); print('                                                        ', end = '\r')
 					else:
@@ -275,7 +297,7 @@ def main():
 							coun = listfollow.json()['countdown']
 							print(f'{red}Đang Get Nhiệm Vụ Follow, COUNTDOWN: {str(round(coun, 3))} ', end = '\r'); sleep(2); print('                                                       ', end = '\r')
 						elif listfollow.json()['error'] == 'Vui lòng ấn NHẬN TẤT CẢ rồi sau đó tiếp tục làm nhiệm vụ để tránh lỗi!':
-							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') #TIKTOK_LIKE, TIKTOK_FOLLOW, TIKTOK_COMMENT
+							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') 
 						else:
 							print(red+listfollow.json()['error'] , end ='\r');sleep(2); print('                                                        ', end = '\r')
 					else:
@@ -321,6 +343,8 @@ def main():
 												namtool = 1
 												break
 											bonam(14)
-# Cuối cùng, hàm main() này sẽ được gọi ở tệp local sau khi tải về.
+
 if __name__ == '__main__':
+    # Trong môi trường exec, hàm này sẽ được gọi bằng globals()['main']()
+    # Nếu chạy độc lập để test, nó vẫn hoạt động bình thường
     main()
