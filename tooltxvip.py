@@ -1,4 +1,3 @@
-# tooltxvip.py - File chứa toàn bộ logic game Tài Xỉu
 import random
 import time
 import sys
@@ -20,13 +19,34 @@ thanh_dep = "\033[1;97m⮑ "
 
 lich_su = []
 
+# =======================================================
+# HÀM MỚI: TẠO KHUNG DỰ ĐOÁN 7 MÀU
+# =======================================================
+def print_box_text(title, content_text, content_color):
+    """In nội dung trong khung viền 7 màu."""
+    # Các mã màu viền luân phiên (7 màu)
+    colors = [vang, xanh_la, xanh_duong, tim, do, trang, xanhnhat]
+    
+    # Chuẩn bị nội dung
+    content_line = f"{vang}{title}{content_color}{content_text}{RESET}"
+    
+    # Tạo viền trên/dưới
+    width = 45 # Chiều rộng khung cố định
+    vi_bien = ""
+    for i in range(width):
+        vi_bien += colors[i % len(colors)] + "═"
+    
+    # In khung
+    print(f"\n{vi_bien}{RESET}")
+    print(f"{colors[0]}║ {content_line}{' ' * (width - len(title) - len(content_text) - 10)}{colors[0]}║{RESET}")
+    print(f"{vi_bien}{RESET}")
+
 # CÔNG THỨC RANDOM + TÍNH TỈ LỆ XÁC XUẤT DỰ ĐOÁN
 def du_doan_theo_cong_thuc(dice):
+    # ... (Hàm này giữ nguyên như code gốc) ...
     tong = sum(dice)
     dice_sorted = sorted(dice)
 
-    # ... (Các hàm logic Tài Xỉu giữ nguyên) ...
-    # (Để tiết kiệm không gian, tôi lược bớt code chi tiết ở đây, nhưng bạn dùng code gốc của mình)
     # ======= XỈU =======
     if tong == 3:
         return random.choice(["Tài","Xỉu"])
@@ -80,7 +100,7 @@ def du_doan_theo_cong_thuc(dice):
         return "Tài" if dice_sorted == [6,6,6] else random.choice(["Tài","Xỉu"])
 
     return "Tài" if tong > 10 else "Xỉu"
-
+# ... (Các hàm khác: du_doan_thuan_nghich, du_doan_theo_cau giữ nguyên) ...
 # THUẬN NGHỊCH
 def du_doan_thuan_nghich(dice):
     tong = sum(dice)
@@ -134,6 +154,7 @@ def du_doan_theo_cau(lich_su):
         # Trường hợp cân bằng, đoán đảo cầu so với kết quả cuối
         return "Tài" if lich_su[-1] == "Xỉu" else "Xỉu"
 
+
 def du_doan_xucxac(xucsac: str):
     if len(xucsac) != 3 or not all(ch in "123456" for ch in xucsac):
         print(f"{do}⚠️ Vui lòng nhập đúng 3 con xúc xắc!{RESET}")
@@ -158,15 +179,18 @@ def du_doan_xucxac(xucsac: str):
 
     acc = random.randint(75, 99)
     
-    # Hiển thị kết quả dự đoán với màu
+    # HIỂN THỊ KẾT QUẢ VỚI KHUNG MỚI
     kq_color = xanh_la if du_doan == "Tài" else vang
-    print(f"\n{vang}🎯 Dự đoán: {kq_color}{du_doan} (Tỷ lệ chính xác: {acc}%) {RESET}")
+    
+    title = f"🎯 Dự đoán:"
+    content = f"{du_doan} (Tỷ lệ chính xác: {acc}%)"
+    
+    print_box_text(title, content, kq_color) # Gọi hàm in khung
+    
     return du_doan
 
 def type_text(text, color=trang, delay=0.03):
     """Hàm hiển thị từng ký tự một."""
-    # SỬ DỤNG sys.stdout.write(color) và sys.stdout.write(RESET + "\n")
-    # Tương tự như trong run.py
     sys.stdout.write(color)
     for char in text:
         sys.stdout.write(char)
@@ -215,4 +239,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() # Giữ nguyên main() để nó có thể chạy khi được exec() trong run.py
+    main()
