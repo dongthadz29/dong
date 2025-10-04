@@ -1,25 +1,5 @@
 # LƯU Ý: File này được chạy trong môi trường của tệp tdsvip.py (Loader)
-# Khởi tạo lại màu sắc để các hàm chính có thể sử dụng (vì chúng không nằm trong hàm main của loader)
-
-den = "\033[1;90m"
-luc = "\033[1;32m"
-trang = "\033[1;37m"
-red = "\033[1;31m"
-vang = "\033[1;33m"
-tim = "\033[1;35m"
-lamd = "\033[1;34m"
-lam = "\033[1;36m"
-purple = "\033[35m"
-hong = "\033[1;95m"
-thanh_xau= "\033[1;97m-> "
-thanh_dep= "\033[1;97m-> "
-
-# Import cần thiết cho Core
-from pystyle import Colorate, Colors # Chỉ cần Colorate và Colors cho phần nhiệm vụ
-import requests
-import os
-from time import sleep
-from datetime import datetime
+# Toàn bộ biến/hàm/module đã được định nghĩa ở trên (như bonam, total, may, requests...) đều có thể dùng.
 
 class TraoDoiSub_Api (object):
 	def __init__ (self, token):
@@ -43,7 +23,7 @@ class TraoDoiSub_Api (object):
 				return False
 		except:
 			return False
-	
+	#tiktok_like, tiktok_follow
 	def get_job(self, type):
 		try:
 			get = requests.get(f'https://traodoisub.com/api/?fields={type}&access_token={self.token}')
@@ -52,6 +32,7 @@ class TraoDoiSub_Api (object):
 			return False
 	
 	def cache(self, id, type):
+#TIKTOK_LIKE_CACHE, TIKTOK_FOLLOW_CACHE
 		try:
 			cache = requests.get(f'https://traodoisub.com/api/coin/?type={type}&id={id}&access_token={self.token}').json()
 			try:
@@ -103,6 +84,7 @@ def chuyen(link, may):
 
 
 def main():
+	# Hàm main() mới này sẽ được gọi sau khi code từ xa được nạp
 	dem=0
 
 	while True:
@@ -191,7 +173,7 @@ def main():
 							coun = listlike.json()['countdown']
 							print(f'{red}Đang Get Nhiệm Vụ Like, COUNTDOWN: {str(round(coun, 3))} ', end = '\r'); sleep(2); print('                                                       ', end = '\r')
 						elif listlike.json()['error'] == 'Vui lòng ấn NHẬN TẤT CẢ rồi sau đó tiếp tục làm nhiệm vụ để tránh lỗi!':
-							nhan = tds.nhan_xu('TIKTOK_LIKE_API', 'TIKTOK_LIKE') 
+							nhan = tds.nhan_xu('TIKTOK_LIKE_API', 'TIKTOK_LIKE') #TIKTOK_LIKE, TIKTOK_FOLLOW, TIKTOK_COMMENT
 						else:
 							print(red+listlike.json()['error'] , end ='\r');sleep(2); print('                                                        ', end = '\r')
 					else:
@@ -242,7 +224,7 @@ def main():
 							coun = listfollow.json()['countdown']
 							print(red+f'Đang Get Nhiệm Vụ Follow, COUNTDOWN: {str(round(coun, 3))} ', end = '\r'); sleep(2); print('                                                       ', end = '\r')
 						elif listfollow.json()['error'] == 'Vui lòng ấn NHẬN TẤT CẢ rồi sau đó tiếp tục làm nhiệm vụ để tránh lỗi!':
-							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') 
+							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') #TIKTOK_LIKE, TIKTOK_FOLLOW, TIKTOK_COMMENT
 						else:
 							print(red+listfollow.json()['error'] , end ='\r');sleep(2); print('                                                        ', end = '\r')
 					else:
@@ -293,7 +275,7 @@ def main():
 							coun = listfollow.json()['countdown']
 							print(f'{red}Đang Get Nhiệm Vụ Follow, COUNTDOWN: {str(round(coun, 3))} ', end = '\r'); sleep(2); print('                                                       ', end = '\r')
 						elif listfollow.json()['error'] == 'Vui lòng ấn NHẬN TẤT CẢ rồi sau đó tiếp tục làm nhiệm vụ để tránh lỗi!':
-							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') 
+							nhan = tds.nhan_xu('TIKTOK_FOLLOW_API', 'TIKTOK_FOLLOW') #TIKTOK_LIKE, TIKTOK_FOLLOW, TIKTOK_COMMENT
 						else:
 							print(red+listfollow.json()['error'] , end ='\r');sleep(2); print('                                                        ', end = '\r')
 					else:
