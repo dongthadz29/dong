@@ -63,7 +63,7 @@ def banner():
     console = Console()
     panel1 = Panel("[#CCCCCC]╔═╗┌─┐┬  ┬┬┌─┌─┐\n║ ╦│ ││  │├┴┐├┤ \n╚═╝└─┘┴─┘┴┴ ┴└─┘[/]", box=box.ROUNDED, border_style="#FF9966")
     panel2 = Panel("[#FFFF66]Admin: Gia Thông[/]\n[#CCFFCC]Box Zalo: https://zalo.me/g/cdomty095\nTelegram: @Dongthadz[/]", box=box.ROUNDED, border_style="#FFCC66")
-    panel3 = Panel("[#9966CC]Name: MinMinTool[/]\n[#FF9966]Version: 1.0[/]", box=box.ROUNDED, border_style="#66CC33")
+    panel3 = Panel("[#9966CC]Name: Tool Golike[/]\n[#FF9966]Version: 1.0[/]", box=box.ROUNDED, border_style="#66CC33")
     panel4 = Panel(f"[#6666FF]Ip: {ip_lan}[/]\n[#6666CC]Vị Trí: {city},{country}[/]", box=box.ROUNDED, border_style="#3333CC")
     panel5 = Panel(f"[#BBBBBB]{thoigian}\n{date}[/]", box=box.ROUNDED, border_style="#6666CC")
     console.print(Columns([panel1, panel2]))
